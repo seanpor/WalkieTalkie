@@ -6,7 +6,9 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.media.AudioManager
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
@@ -30,6 +32,7 @@ class WalkieTalkieService : Service() {
     private var server: Server? = null
     private var client: Client? = null
     private var audio: Audio? = null
+    private lateinit var audioDeviceReceiver: AudioDeviceReceiver
 
     inner class WalkieTalkieBinder : Binder() {
         fun getService(): WalkieTalkieService = this@WalkieTalkieService
@@ -48,12 +51,24 @@ class WalkieTalkieService : Service() {
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
+        setupAudioDeviceReceiver()
+    }
+
+    private fun setupAudioDeviceReceiver() {
+        audioDeviceReceiver = AudioDeviceReceiver {
+            Log.d("Service", "Audio device change detected, restarting audio.")
+            audio?.restart()
+        }
+        val filter = IntentFilter().apply {
+            addAction(AudioManager.ACTION_HEADSET_PLUG)
+            addAction(AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED)
+        }
+        registerReceiver(audioDeviceReceiver, filter)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val notification = createNotification("Walkie Talkie is active")
 
-        // CRITICAL: Must specify service type for Android 14+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             startForeground(NOTIFICATION_ID, notification,
                 android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE)
@@ -77,21 +92,16 @@ class WalkieTalkieService : Service() {
                 serviceScope.launch {
                     server = Server(PORT)
 
-                    // Coroutine for receiving client audio and broadcasting to other clients
                     launch {
                         while (isActive) {
                             val receivedPacket = server!!.receive()
                             receivedPacket?.let {
-                                // CRITICAL: Host PLAYS the client audio locally
                                 audio!!.play(it.data)
-
-                                // Also broadcast to OTHER clients (not back to sender)
                                 server!!.broadcast(it.data, it.sender)
                             }
                         }
                     }
 
-                    // Coroutine for recording and broadcasting host audio
                     launch {
                         delay(100)
                         var packetCount = 0
@@ -99,9 +109,7 @@ class WalkieTalkieService : Service() {
                             try {
                                 val data = audio!!.record()
                                 if (data.isNotEmpty()) {
-                                    // Broadcast host's own voice to all clients
                                     server!!.broadcast(data)
-
                                     if (packetCount++ % 100 == 0) {
                                         Log.d("Service", "Host sent packet ${data.size} bytes to ${server!!.getClientCount()} clients")
                                     }
@@ -121,9 +129,7 @@ class WalkieTalkieService : Service() {
                     serviceScope.launch {
                         client = Client(ip, PORT)
 
-                        // Coroutine for recording and sending audio
                         launch {
-                            // Small delay to ensure audio is ready
                             delay(100)
                             while (isActive) {
                                 try {
@@ -131,7 +137,6 @@ class WalkieTalkieService : Service() {
                                     if (data.isNotEmpty()) {
                                         client!!.send(data)
                                     }
-                                    // Small delay to prevent CPU overload
                                     delay(10)
                                 } catch (e: Exception) {
                                     Log.e("Service", "Error in client recording: ${e.message}")
@@ -139,7 +144,6 @@ class WalkieTalkieService : Service() {
                             }
                         }
 
-                        // Coroutine for receiving and playing audio
                         launch {
                             while (isActive) {
                                 try {
@@ -165,6 +169,7 @@ class WalkieTalkieService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         Log.d("Service", "Service destroying")
+        unregisterReceiver(audioDeviceReceiver)
         serviceScope.cancel()
         server?.stop()
         client?.stop()

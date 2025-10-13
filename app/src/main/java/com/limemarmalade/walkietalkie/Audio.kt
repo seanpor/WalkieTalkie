@@ -115,6 +115,11 @@ class Audio(
 
     fun getBufferSize(): Int = bufferSize
 
+    fun restart() {
+        stop()
+        start()
+    }
+
     fun stop() {
         if (this::audioRecord.isInitialized) {
             if (audioRecord.recordingState == AudioRecord.RECORDSTATE_RECORDING) {
