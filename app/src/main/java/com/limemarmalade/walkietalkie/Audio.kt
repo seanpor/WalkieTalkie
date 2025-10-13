@@ -42,8 +42,6 @@ class Audio(
         if (bluetoothDevice != null) {
             Log.d("Audio", "Bluetooth device found, setting as communication device")
             audioManager.setCommunicationDevice(bluetoothDevice)
-            audioManager.startBluetoothSco()
-            audioManager.isBluetoothScoOn = true
             audioManager.isSpeakerphoneOn = false
         } else {
             // Fallback to other devices if no bluetooth headset is connected
@@ -136,12 +134,6 @@ class Audio(
 
         // Reset speaker mode
         audioManager.mode = originalAudioMode
-
-        if (audioManager.isBluetoothScoOn) {
-            audioManager.isBluetoothScoOn = false
-            audioManager.stopBluetoothSco()
-        }
-
         audioManager.clearCommunicationDevice()
     }
 }
