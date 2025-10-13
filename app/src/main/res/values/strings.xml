@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Walkie.talkie</string>
+    <string name="host_instructions">Press the button below to start hosting. Your IP address will be displayed on the next screen.</string>
+    <string name="client_instructions">Enter the IP address of the host and press the connect button.</string>
 </resources>

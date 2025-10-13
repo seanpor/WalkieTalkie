@@ -7,6 +7,7 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Binder
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
@@ -29,6 +30,20 @@ class WalkieTalkieService : Service() {
     private var server: Server? = null
     private var client: Client? = null
     private var audio: Audio? = null
+
+    inner class WalkieTalkieBinder : Binder() {
+        fun getService(): WalkieTalkieService = this@WalkieTalkieService
+    }
+
+    private val binder = WalkieTalkieBinder()
+
+    override fun onBind(intent: Intent?): IBinder {
+        return binder
+    }
+
+    fun getClientCount(): Int {
+        return server?.getClientCount() ?: 0
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -145,10 +160,6 @@ class WalkieTalkieService : Service() {
         }
 
         return START_STICKY
-    }
-
-    override fun onBind(intent: Intent?): IBinder? {
-        return null
     }
 
     override fun onDestroy() {

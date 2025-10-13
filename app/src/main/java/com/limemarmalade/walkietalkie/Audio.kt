@@ -37,16 +37,25 @@ class Audio(
         audioManager.mode = AudioManager.MODE_IN_COMMUNICATION
 
         val devices = audioManager.availableCommunicationDevices
-        // Prefer built-in speaker or earpiece for voice communication
-        val preferredDevice = devices.find {
-            it.type == AudioDeviceInfo.TYPE_BUILTIN_EARPIECE ||
-                    it.type == AudioDeviceInfo.TYPE_BUILTIN_SPEAKER ||
-                    it.type == AudioDeviceInfo.TYPE_WIRED_HEADSET ||
-                    it.type == AudioDeviceInfo.TYPE_BLUETOOTH_SCO
-        }
-        preferredDevice?.let {
-            Log.d("Audio", "Setting communication device: ${it.type}")
-            audioManager.setCommunicationDevice(it)
+        val bluetoothDevice = devices.find { it.type == AudioDeviceInfo.TYPE_BLUETOOTH_SCO }
+
+        if (bluetoothDevice != null) {
+            Log.d("Audio", "Bluetooth device found, setting as communication device")
+            audioManager.setCommunicationDevice(bluetoothDevice)
+            audioManager.startBluetoothSco()
+            audioManager.isBluetoothScoOn = true
+            audioManager.isSpeakerphoneOn = false
+        } else {
+            // Fallback to other devices if no bluetooth headset is connected
+            val preferredDevice = devices.find {
+                it.type == AudioDeviceInfo.TYPE_WIRED_HEADSET ||
+                        it.type == AudioDeviceInfo.TYPE_BUILTIN_EARPIECE ||
+                        it.type == AudioDeviceInfo.TYPE_BUILTIN_SPEAKER
+            }
+            preferredDevice?.let {
+                Log.d("Audio", "Setting communication device: ${it.type}")
+                audioManager.setCommunicationDevice(it)
+            }
         }
 
         audioRecord = AudioRecord(
@@ -122,6 +131,11 @@ class Audio(
 
         // Reset speaker mode
         audioManager.mode = originalAudioMode
+
+        if (audioManager.isBluetoothScoOn) {
+            audioManager.isBluetoothScoOn = false
+            audioManager.stopBluetoothSco()
+        }
 
         audioManager.clearCommunicationDevice()
     }
