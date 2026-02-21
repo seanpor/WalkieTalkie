@@ -57,6 +57,8 @@ dependencies {
     testImplementation("org.mockito:mockito-core:5.1.1")
     testImplementation("io.mockk:mockk:1.13.5")
     androidTestImplementation(libs.androidx.junit)
+    implementation("com.android.billingclient:billing:6.0.1")
+    implementation("androidx.compose.material:material-icons-extended:1.6.7")
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)

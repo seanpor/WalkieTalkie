@@ -42,7 +42,13 @@ class Audio(
         if (bluetoothDevice != null) {
             Log.d("Audio", "Bluetooth device found, setting as communication device")
             audioManager.setCommunicationDevice(bluetoothDevice)
-            audioManager.isSpeakerphoneOn = false
+            // Use modern API for speakerphone control
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                audioManager.isSpeakerphoneOn = false
+            } else {
+                @Suppress("DEPRECATION")
+                audioManager.isSpeakerphoneOn = false
+            }
         } else {
             // Fallback to other devices if no bluetooth headset is connected
             val preferredDevice = devices.find {
