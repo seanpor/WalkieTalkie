@@ -1,0 +1,13 @@
+✨ New in this version:
+• Added premium features with one-time purchase
+• Improved audio quality and reliability
+• Added privacy policy and terms of service
+• Enhanced user interface and experience
+• Better error handling and stability
+• Automatic currency localization for purchases
+
+🐛 Bug fixes:
+• Fixed audio device switching issues
+• Improved network connection handling
+• Better memory management
+• Various stability improvements

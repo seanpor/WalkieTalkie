@@ -1,0 +1,35 @@
+**WalkieTalkie - Simple Voice Communication**
+
+WalkieTalkie turns your phone into a modern walkie-talkie! Communicate instantly with friends and family over local Wi-Fi networks without using mobile data or internet connection.
+
+**✨ Key Features:**
+• One-tap voice communication
+• Works over local Wi-Fi (no internet required)
+• High-quality audio transmission
+• Simple and intuitive interface
+• Battery-efficient operation
+• Works between Android devices
+
+**🔒 Privacy Focused:**
+• No personal data collection
+• All communication stays on your local network
+• No server storage or logging
+
+**💡 Perfect For:**
+• Family communication at home
+• Team coordination at events
+• Outdoor activities and camping
+• Emergency situations
+• Places with poor cellular coverage
+
+**📱 Easy to Use:**
+1. Open WalkieTalkie on both devices
+2. Connect to the same Wi-Fi network
+3. Tap to talk, release to listen
+
+**🌍 Language Support:**
+English (more languages coming soon)
+
+**📢 Note:** Both devices need to be connected to the same local network for WalkieTalkie to work.
+
+Download now and experience simple, reliable voice communication!
