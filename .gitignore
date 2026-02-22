@@ -21,3 +21,22 @@ local.properties
 # User-specific files
 .DS_Store
 Thumbs.db
+
+# Native build artifacts (NDK)
+.externalNativeBuild/
+.cxx/
+
+# Gradle Performance Caches
+.kotlin/
+.incremental/
+
+# Virtual Device logs & Captures
+captures/
+
+# vi Swap files (Since you use vi, these are common if a session crashes)
+*.swp
+*.swo
+
+# Project-wide build folder
+# (Your list has /app/build, but there is often a root /build folder too)
+/build/
