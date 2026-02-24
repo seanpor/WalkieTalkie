@@ -47,6 +47,7 @@
 - **Files Created**: `TESTING_PLAN.md`, `test_basic_functionality.sh`, `GOOGLE_PLAY_SUBMISSION_CHECKLIST.md`
 - **Coverage**: 7 test categories, comprehensive test cases
 - **Tools**: Automated test script, manual testing guide
+- **Testing Approach**: Google Play internal testing track and promo codes for feedback
 
 ## 📊 Project Statistics
 

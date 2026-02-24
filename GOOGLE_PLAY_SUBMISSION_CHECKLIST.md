@@ -62,6 +62,8 @@
 - [ ] Verify billing functionality with test purchases
 - [ ] Test restore purchases functionality
 - [ ] Check memory usage and performance
+- [ ] Test using Google Play internal testing track
+- [ ] Generate promo codes for feedback testing
 
 ### 8. **Legal & Compliance**
 - [ ] Privacy policy: ✅ Complete and accessible
@@ -115,8 +117,8 @@
 - **Tags**: walkie talkie, voice chat, local network, no internet
 
 #### Contact Details
-- **Website**: https://walkietalkie.app (or your domain)
-- **Email**: support@walkietalkie.app
+- **Website**: https://walkietalkie.example.com (or your domain)
+- **Email**: support@example.com
 - **Phone**: [Your support number if available]
 
 #### Privacy Policy
@@ -250,3 +252,4 @@
 **Next Step**: Final testing and Google Play Console setup
 
 🎉 **WalkieTalkie is ready for its €1 launch on Google Play Store!** 🚀
+

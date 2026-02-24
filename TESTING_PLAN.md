@@ -14,6 +14,11 @@
 
 ### 1. Functional Testing
 
+#### Testing Approach
+- All tests should be conducted through Google Play's internal testing track
+- Use promo codes for friend feedback testing
+- Maintain proper billing verification during testing
+
 #### Audio Functionality
 - [ ] Test microphone permission request and handling
 - [ ] Test audio recording functionality
@@ -132,6 +137,8 @@
 - [ ] Test successful purchase flow
 - [ ] Test purchase verification
 - [ ] Test purchase acknowledgment
+- [ ] Test promo code functionality
+- [ ] Test internal testing track access
 
 #### Error Handling
 - [ ] Test billing service unavailable
@@ -243,6 +250,7 @@
 - Performance metrics met
 - No regressions introduced
 - Ready for production release
+- Google Play internal testing track verified
 
 ## 📅 Testing Timeline
 
@@ -253,7 +261,8 @@
 - **Phase 5**: Security & Billing Testing (1 day)
 - **Phase 6**: Error Handling Testing (1 day)
 - **Phase 7**: Regression Testing (1 day)
-- **Total**: 9 days
+- **Phase 8**: Google Play Testing (1 day)
+- **Total**: 10 days
 
 ---
 

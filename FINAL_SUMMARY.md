@@ -60,6 +60,7 @@
 - Manual testing guide
 - Performance metrics
 - Submission checklist
+- Google Play internal testing track support
 
 ## 📁 Project Structure
 
